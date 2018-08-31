@@ -1,0 +1,27 @@
+#!/bin/bash
+# geth initializing
+if [ $1 = "init" ]; then
+    mkdir -p ~/private_net
+    echo > ~/private_net/genesis.json << EOF
+{
+    "config": {
+	"chainId": 15,
+	"homesteadBlock": 0,
+	"eip155Block": 0,
+	"eip158Block": 0
+    },
+    "difficulty": "10",
+    "gasLimit": "2100000",
+    "alloc" : {}
+}
+EOF
+    geth --datadir ~/private_net/ init ~/private_net/genesis.json
+fi
+# geth run
+if [ $1 = "run" ]; then
+    geth --networkid "15" --datadir "~/private_net" --rpc --rpcaddr 192.168.56.140 --rpcport 8545 --rpcapi "web3, eth, net, personal" --rpccorsdomain "*" console
+fi
+# geth attach
+if [ $1 = "attach" ]; then
+    geth attach ~/private_net/geth.ipc
+fi
