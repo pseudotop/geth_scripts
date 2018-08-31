@@ -36,10 +36,10 @@ for ((ip=1; ip<=lines; ip++)); do
     sshpass -p "111111" ssh -o StrictHostKeyChecking=no root@$hostaddr "hostnamectl set-hostname $hostaddr" 1&> /dev/null 
     echo -ne 'progress: ####              (20%)\r'
     sleep 1
-    sshpass -p "111111" scp -o StrictHostKeyChecking=no set_config.sh root@$hostaddr:/root/ #1&> /dev/null
+    sshpass -p "111111" scp -o StrictHostKeyChecking=no set_config.sh root@$hostaddr:/root/ 1&> /dev/null
     echo -ne 'progress: ########          (40%)\r'
     sleep 1
-    sshpass -p "111111" ssh -o StrictHostKeyChecking=no root@$hostaddr "sudo /root/set_config.sh" #1&> /dev/null 
+    sshpass -p "111111" ssh -o StrictHostKeyChecking=no root@$hostaddr "sudo /root/set_config.sh" 1&> /dev/null 
     echo -ne 'progress: #############     (70%)\r'
     sleep 1
     sshpass -p "111111" ssh-copy-id -o StrictHostKeyChecking=no $hostaddr 1&> /dev/null
