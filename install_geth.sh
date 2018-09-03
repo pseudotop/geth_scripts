@@ -29,20 +29,23 @@ for ((ip=1; ip<=lines; ip++)); do
     fi
        
 
-    sshpass -p "111111" ssh -o StrictHostKeyChecking=no $loginuser@$hostaddr "sudo sed -i.bak \"s/prohibit-password/yes/g\" /etc/ssh/sshd_config;\
-    sudo service ssh restart" 1&> /dev/null
+    sshpass -p "111111" ssh -o StrictHostKeyChecking=no $loginuser@$hostaddr "\
+    echo -e \"111111\n\" | sudo -S sed -i.bak \"s/prohibit-password/yes/g\" /etc/ssh/sshd_config;\
+    echo -e \"111111\n\" | sudo -S service ssh restart;\
+    echo -e \"111111\n111111\n111111\" | sudo -S passwd root;\
+    " 1&> /dev/null
     echo -ne 'progress: ##                (10%)\r'
     sleep 1
-    sshpass -p "111111" ssh -o StrictHostKeyChecking=no root@$hostaddr "hostnamectl set-hostname $hostaddr" 1&> /dev/null 
+    sshpass -p "111111" ssh -o StrictHostKeyChecking=no root@$hostaddr "hostnamectl set-hostname $hostaddr" 1> /dev/null 
     echo -ne 'progress: ####              (20%)\r'
     sleep 1
-    sshpass -p "111111" scp -o StrictHostKeyChecking=no set_config.sh root@$hostaddr:/root/ 1&> /dev/null
+    sshpass -p "111111" scp -o StrictHostKeyChecking=no set_config.sh root@$hostaddr:/root/ 1> /dev/null
     echo -ne 'progress: ########          (40%)\r'
     sleep 1
-    sshpass -p "111111" ssh -o StrictHostKeyChecking=no root@$hostaddr "sudo /root/set_config.sh" 1&> /dev/null 
+    sshpass -p "111111" ssh -o StrictHostKeyChecking=no root@$hostaddr "nohup sudo /root/set_config.sh" 1> /dev/null 
     echo -ne 'progress: #############     (70%)\r'
     sleep 1
-    sshpass -p "111111" ssh-copy-id -o StrictHostKeyChecking=no $hostaddr 1&> /dev/null
+    sshpass -p "111111" ssh-copy-id -o StrictHostKeyChecking=no $hostaddr 1> /dev/null
     echo -ne 'progress: ##################(100%)\r\n'
     sleep 1
 done
