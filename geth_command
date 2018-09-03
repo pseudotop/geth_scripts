@@ -19,7 +19,7 @@ EOF
 fi
 # geth run
 if [ $1 = "run" ]; then
-    priv_addr=ifconfig | grep "inet addr" | grep 192 | awk '{print $2}' | sed -e 's/^.*://g'
+    priv_addr=`ifconfig | grep "inet addr" | grep 192 | awk '{print $2}' | sed -e 's/^.*://g'`
     geth --networkid "15" --datadir "~/private_net" --rpc --rpcaddr "$priv_addr" --rpcport "8545" --rpcapi "web3, eth, net, personal" --rpccorsdomain "*" console
 fi
 # geth attach
